@@ -1,0 +1,16 @@
+.grid-container {
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: repeat(25, 20px);
+  width: 502px;
+  border: 1px solid;
+}
+
+#reset {
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  width: 200px;
+}
