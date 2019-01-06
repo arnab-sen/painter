@@ -1,3 +1,5 @@
+var dimensions = 25;
+var mousedown = false;
 
 function createGrid() {
   var gridContainer = document.querySelector(".grid-container");
@@ -11,7 +13,11 @@ function createGrid() {
       //gridItem.textContent = gridItem.id;
       gridItem.style.padding = "10px";
       //gridItem.style.border = "1px solid";
-      gridItem.addEventListener("mouseover", e => {e.target.style.backgroundColor = "black";});
+      gridItem.addEventListener("mouseover", e => {
+        if (mousedown) e.target.style.backgroundColor = "black";
+        });
+      gridItem.addEventListener("mousedown", () => {mousedown = true;})
+      gridItem.addEventListener("mouseup", () => {mousedown = false;})
       gridContainer.appendChild(gridItem);
     }
   }
@@ -31,6 +37,5 @@ function createResetButton () {
   button.addEventListener("click", e => {resetGrid();});
 }
 
-var dimensions = 25;
 createGrid();
 createResetButton();
