@@ -1,3 +1,7 @@
+html {
+  touch-action: none;
+}
+
 .grid-container {
   display: grid;
   margin-left: auto;
