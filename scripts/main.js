@@ -10,13 +10,16 @@ function createGrid() {
       gridItem = document.createElement("div");
       gridItem.setAttribute("class", "grid-item");
       gridItem.setAttribute("id", `id-${i}-${j}`);
+      gridItem.setAttribute("draggable", "false");
       //gridItem.textContent = gridItem.id;
       gridItem.style.padding = "10px";
       //gridItem.style.border = "1px solid";
-      gridItem.addEventListener("mouseover", e => {
+      gridItem.addEventListener("mouseenter", e => {
         if (mousedown) e.target.style.backgroundColor = "black";
         });
-      gridItem.addEventListener("mousedown", () => {mousedown = true;})
+      gridItem.addEventListener("mousedown", e => {mousedown = true; 
+        e.target.style.backgroundColor = "black";
+        })
       gridItem.addEventListener("mouseup", () => {mousedown = false;})
       gridContainer.appendChild(gridItem);
     }
