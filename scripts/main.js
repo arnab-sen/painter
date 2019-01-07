@@ -1,5 +1,5 @@
 var rows = 80;
-var cols = 50
+var cols = 50;
 var mousedown = false;
 
 function createGrid() {
