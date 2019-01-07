@@ -1,4 +1,4 @@
-var dimensions = 25;
+var dimensions = 100;
 var mousedown = false;
 
 function createGrid() {
@@ -12,7 +12,7 @@ function createGrid() {
       gridItem.setAttribute("id", `id-${i}-${j}`);
       gridItem.setAttribute("draggable", "false");
       //gridItem.textContent = gridItem.id;
-      gridItem.style.padding = "10px";
+      gridItem.style.padding = "4px";
       //gridItem.style.border = "1px solid";
       gridItem.addEventListener("mouseenter", e => {
         if (mousedown) e.target.style.backgroundColor = "black";

@@ -2,8 +2,8 @@
   display: grid;
   margin-left: auto;
   margin-right: auto;
-  grid-template-columns: repeat(25, 20px);
-  width: 502px;
+  grid-template-columns: repeat(100, 5px);
+  width: 503px;
   border: 1px solid;
 }
 
