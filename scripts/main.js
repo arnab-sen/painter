@@ -1,19 +1,20 @@
-var dimensions = 100;
+var rows = 80;
+var cols = 50
 var mousedown = false;
 
 function createGrid() {
   var gridContainer = document.querySelector(".grid-container");
   var gridItem;
   
-  for (var i = 0; i < dimensions; i++) {
-    for (var j = 0; j < dimensions; j++) {
+  for (var i = 0; i < rows; i++) {
+    for (var j = 0; j < cols; j++) {
       gridItem = document.createElement("div");
       gridItem.setAttribute("class", "grid-item");
       gridItem.setAttribute("id", `id-${i}-${j}`);
       gridItem.setAttribute("draggable", "false");
       //gridItem.textContent = gridItem.id;
-      gridItem.style.padding = "4px";
-      //gridItem.style.border = "1px solid";
+      gridItem.style.padding = "5px";
+      //gridItem.style.border = "1px solid black";
       gridItem.addEventListener("mouseenter", e => {
         if (mousedown) e.target.style.backgroundColor = "black";
         });
@@ -27,8 +28,8 @@ function createGrid() {
 }
 
 function resetGrid() {
-  for (var i = 0; i < dimensions; i++) {
-    for (var j = 0; j < dimensions; j++) {
+  for (var i = 0; i < rows; i++) {
+    for (var j = 0; j < cols; j++) {
       gridItem = document.querySelector(`#id-${i}-${j}`);
       gridItem.style.backgroundColor = "white";
     }
