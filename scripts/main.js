@@ -1,7 +1,7 @@
 var canvas = document.querySelector("#mainCanvas");
 var ctx = canvas.getContext("2d");
 ctx.fillStyle = "black";
-ctx.fillRect(10, 10, 100, 100);
+ctx.strokeStyle = ctx.fillStyle;
 
 var clearButton = document.querySelector("#clear");
 var flagMouseDown = false;
@@ -13,7 +13,6 @@ canvas.addEventListener("click", e => {
 canvas.addEventListener("mousedown", e => {
   flagMouseDown = true; 
   ctx.beginPath();
-  drawAtCurrentPos(e.clientX, e.clientY, 2);
   });
 canvas.addEventListener("mouseup", e => {flagMouseDown = false;});
 canvas.addEventListener("mousemove", e => {
@@ -31,5 +30,3 @@ function drawAtCurrentPos(x, y, pixelSize, path = null, color = null) {
     ctx.fillRect(x, y, pixelSize, pixelSize);
   }
 }
-  
-
