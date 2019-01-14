@@ -1,32 +1,30 @@
 var canvas = document.querySelector("#mainCanvas");
 var ctx = canvas.getContext("2d");
-ctx.fillStyle = "black";
-ctx.strokeStyle = ctx.fillStyle;
-
 var clearButton = document.querySelector("#clear");
 var flagMouseDown = false;
 var strokePath = new Path2D();
+ctx.strokeStyle = ctx.fillStyle = "black";
+
 clearButton.addEventListener("click", e => {ctx.clearRect(0, 0, canvas.width, canvas.height);});
-canvas.addEventListener("click", e => {
-  drawAtCurrentPos(e.clientX, e.clientY, 2);
-  });
+
+canvas.addEventListener("click", e => 
+  ctx.fillRect(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop, 2, 2));
+  
 canvas.addEventListener("mousedown", e => {
   flagMouseDown = true; 
   ctx.beginPath();
   });
-canvas.addEventListener("mouseup", e => {flagMouseDown = false;});
+  
+canvas.addEventListener("mouseup", e => flagMouseDown = false);
+
 canvas.addEventListener("mousemove", e => {
-  if (flagMouseDown) drawAtCurrentPos(e.clientX, e.clientY, path = strokePath, 1);
+  if (flagMouseDown) drawAtCurrentPos(e.clientX, e.clientY, 2, 2)
   });
   
-function drawAtCurrentPos(x, y, pixelSize, path = null, color = null) {
-  if (color != null) ctx.fillStyle = color;
+function drawAtCurrentPos(x, y, color = null) {
+  if (color != null) ctx.strokeStyle = ctx.fillStyle = color;
   x -= canvas.offsetLeft;
   y -= canvas.offsetTop;
-  if (path != null) {
-    ctx.lineTo(x, y);
-    ctx.stroke();
-  } else {
-    ctx.fillRect(x, y, pixelSize, pixelSize);
-  }
+  ctx.lineTo(x, y);
+  ctx.stroke();
 }
