@@ -4,7 +4,7 @@ var clearButton = document.querySelector("#clear");
 var flagMouseDown = false;
 ctx.strokeStyle = ctx.fillStyle = "black";
 
-clearButton.addEventListener("click", e => {ctx.clearRect(0, 0, canvas.width, canvas.height);});
+clearButton.addEventListener("click", e => ctx.clearRect(0, 0, canvas.width, canvas.height));
 canvas.addEventListener("click", e => drawPixel(e));
 canvas.addEventListener("mousedown", e => {
   flagMouseDown = true; 
