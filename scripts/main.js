@@ -1,45 +1,35 @@
-var rows = 80;
-var cols = 50;
-var mousedown = false;
+var canvas = document.querySelector("#mainCanvas");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "black";
+ctx.fillRect(10, 10, 100, 100);
 
-function createGrid() {
-  var gridContainer = document.querySelector(".grid-container");
-  var gridItem;
+var clearButton = document.querySelector("#clear");
+var flagMouseDown = false;
+var strokePath = new Path2D();
+clearButton.addEventListener("click", e => {ctx.clearRect(0, 0, canvas.width, canvas.height);});
+canvas.addEventListener("click", e => {
+  drawAtCurrentPos(e.clientX, e.clientY, 2);
+  });
+canvas.addEventListener("mousedown", e => {
+  flagMouseDown = true; 
+  ctx.beginPath();
+  drawAtCurrentPos(e.clientX, e.clientY, 2);
+  });
+canvas.addEventListener("mouseup", e => {flagMouseDown = false;});
+canvas.addEventListener("mousemove", e => {
+  if (flagMouseDown) drawAtCurrentPos(e.clientX, e.clientY, path = strokePath, 1);
+  });
   
-  for (var i = 0; i < rows; i++) {
-    for (var j = 0; j < cols; j++) {
-      gridItem = document.createElement("div");
-      gridItem.setAttribute("class", "grid-item");
-      gridItem.setAttribute("id", `id-${i}-${j}`);
-      gridItem.setAttribute("draggable", "false");
-      //gridItem.textContent = gridItem.id;
-      gridItem.style.padding = "5px";
-      //gridItem.style.border = "1px solid black";
-      gridItem.addEventListener("mouseenter", e => {
-        if (mousedown) e.target.style.backgroundColor = "black";
-        });
-      gridItem.addEventListener("mousedown", e => {mousedown = true; 
-        e.target.style.backgroundColor = "black";
-        })
-      gridItem.addEventListener("mouseup", () => {mousedown = false;})
-      gridContainer.appendChild(gridItem);
-    }
+function drawAtCurrentPos(x, y, pixelSize, path = null, color = null) {
+  if (color != null) ctx.fillStyle = color;
+  x -= canvas.offsetLeft;
+  y -= canvas.offsetTop;
+  if (path != null) {
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  } else {
+    ctx.fillRect(x, y, pixelSize, pixelSize);
   }
 }
+  
 
-function resetGrid() {
-  for (var i = 0; i < rows; i++) {
-    for (var j = 0; j < cols; j++) {
-      gridItem = document.querySelector(`#id-${i}-${j}`);
-      gridItem.style.backgroundColor = "white";
-    }
-  }
-}
-
-function createResetButton () {
-  var button = document.querySelector("#reset");
-  button.addEventListener("click", e => {resetGrid();});
-}
-
-createGrid();
-createResetButton();
