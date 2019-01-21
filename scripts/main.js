@@ -1,7 +1,13 @@
 var canvas = document.querySelector("#mainCanvas");
+var canvasImage = null;
 var ctx = canvas.getContext("2d");
 var clearButton = document.querySelector("#clear");
-var flags = {"mousedown" : false, "paint" : true, "getColour" : false};
+var colourButton = document.querySelector("#colours");
+var flags = {
+  "mousedown" : false, 
+  "paint" : true, 
+  "getColour" : false,
+  "displayColours" : false};
 var mainColour = "rgb(0, 0, 0, 255)";
 ctx.strokeStyle = ctx.fillStyle = mainColour;
 
@@ -17,6 +23,28 @@ canvas.addEventListener("mousedown", e => {
 });
 canvas.addEventListener("mouseup", e => flags["mousedown"] = false);
 canvas.addEventListener("mousemove", e => drawLine(e));
+colourButton.addEventListener("click", e => {
+  var c = document.querySelector("#mainColourCanvas");
+  c.style.backgroundColour = ctx.strokeStyle;
+  flags["displayColours"] = !flags["displayColours"];
+  if (flags["displayColours"]) {
+    document.querySelector("#sliders").style.display="block";
+  } else {
+    document.querySelector("#sliders").style.display="none";
+  }
+});
+
+var redSlider = document.querySelector("#redSlider");
+var greenSlider = document.querySelector("#greenSlider");
+var blueSlider = document.querySelector("#blueSlider");
+document.querySelector("#sliders").addEventListener("input", e => {
+  var colour = `rgb(${redSlider.value}, ${greenSlider.value}, ${blueSlider.value})`;
+  mainColour = colour;
+  ctx.strokeStyle = ctx.fillStyle = mainColour;
+  var c = document.querySelector("#mainColourCanvas");
+  c.getContext("2d").fillStyle = mainColour;
+  c.getContext("2d").fillRect(0, 0, c.width, c.height);
+});
   
 function drawPixel(e) {
   if (!flags["mousedown"] || !flags["paint"]) return;
@@ -48,7 +76,7 @@ function addImage(e) {
 }
 
 function getColourAt(x, y) {
-  /* Returns the RGBA values at the (x, y)-positioned pixel on the canvas*/
+  /* Returns the RGBA values at the (x, y)-positioned pixel on the canvas */
   var colour = ctx.getImageData(x, y, 1, 1).data;
   console.log(x, y);
   console.log(colour);
@@ -78,3 +106,5 @@ test.addEventListener("click", e => {
   }
   ctx.putImageData(imageData, 0, 0);
 });
+
+

@@ -3,9 +3,13 @@ html {
   background-color: black;
 }
 
-canvas {
+#mainCanvas {
   display: block;
   background-color: white;
+}
+
+#mainColourCanvas {
+  background-color: black;
 }
 
 #clear {
@@ -22,4 +26,14 @@ canvas {
 #test {
   display: inline-block;
   margin-top: 20px;
+}
+
+#sliders {
+  display: none;
+  margin-top: 10px;
+}
+
+.slider {
+  display: block;
+  margin-top: 5px;
 }
