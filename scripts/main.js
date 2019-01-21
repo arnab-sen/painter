@@ -23,16 +23,6 @@ canvas.addEventListener("mousedown", e => {
 });
 canvas.addEventListener("mouseup", e => flags["mousedown"] = false);
 canvas.addEventListener("mousemove", e => drawLine(e));
-colourButton.addEventListener("click", e => {
-  var c = document.querySelector("#mainColourCanvas");
-  c.style.backgroundColour = ctx.strokeStyle;
-  flags["displayColours"] = !flags["displayColours"];
-  if (flags["displayColours"]) {
-    document.querySelector("#sliders").style.display="block";
-  } else {
-    document.querySelector("#sliders").style.display="none";
-  }
-});
 
 var redSlider = document.querySelector("#redSlider");
 var greenSlider = document.querySelector("#greenSlider");
@@ -45,6 +35,19 @@ document.querySelector("#sliders").addEventListener("input", e => {
   c.getContext("2d").fillStyle = mainColour;
   c.getContext("2d").fillRect(0, 0, c.width, c.height);
 });
+
+colourButton.addEventListener("click", e => {
+  var c = document.querySelector("#mainColourCanvas");
+  c.style.backgroundColor = `rgb(${redSlider.value}, ${greenSlider.value}, ${blueSlider.value})`;
+  ctx.strokeStyle = ctx.fillStyle = c.style.backgroundColor;
+  flags["displayColours"] = !flags["displayColours"];
+  if (flags["displayColours"]) {
+    document.querySelector("#sliders").style.display="block";
+  } else {
+    document.querySelector("#sliders").style.display="none";
+  }
+});
+
   
 function drawPixel(e) {
   if (!flags["mousedown"] || !flags["paint"]) return;
