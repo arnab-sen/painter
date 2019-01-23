@@ -121,10 +121,11 @@ opacityChanger.addEventListener("click", e => {
 function changeOpacity(imageData, opacity) {
   /* Changes the alpha value of each pixel that matches mainColour */
   for (var i = 0; i < imageData.data.length; i += 4) {
-    var r, g, b;
+    var r, g, b, a;
     r = imageData.data[i];
     g = imageData.data[i + 1];
     b = imageData.data[i + 2];
+    a = imageData.data[i + 3];
     if (`rgba(${r}, ${g}, ${b}, ${a})` == mainColour) {
       imageData.data[i + 3] = opacity;
     }
