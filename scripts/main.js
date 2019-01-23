@@ -1,6 +1,8 @@
 var canvas = document.querySelector("#mainCanvas");
 var canvasImage = null;
+var mainColourCanvas = document.querySelector("#mainColourCanvas");
 var ctx = canvas.getContext("2d");
+var mainColourCtx = mainColourCanvas.getContext("2d");
 var clearButton = document.querySelector("#clear");
 var colourButton = document.querySelector("#colours");
 var flags = {
@@ -8,8 +10,30 @@ var flags = {
   "paint" : true, 
   "getColour" : false,
   "displayColours" : false};
-var mainColour = "rgb(0, 0, 0, 255)";
-ctx.strokeStyle = ctx.fillStyle = mainColour;
+  
+var redSlider = document.querySelector("#redSlider");
+var greenSlider = document.querySelector("#greenSlider");
+var blueSlider = document.querySelector("#blueSlider")
+var mainColour;
+updateMainColour(0, 0, 0, 255);
+
+// Initialise slider thumb positions at rgb(0, 0, 0)
+redSlider.stepDown(255);
+greenSlider.stepDown(255);
+blueSlider.stepDown(255);
+
+function updateMainColour(r, g, b, a = 255) {
+  colour = `rgba(${r}, ${g}, ${b}, ${a})`;
+  mainColour = colour;
+  ctx.strokeStyle = ctx.fillStyle = mainColour;
+  mainColourCanvas.style.backgroundColor = mainColour;
+  redSlider.stepDown(255);
+  redSlider.stepUp(r);
+  greenSlider.stepDown(255);
+  greenSlider.stepUp(g);
+  blueSlider.stepDown(255);
+  blueSlider.stepUp(b);
+}
 
 clearButton.addEventListener("click", e => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -24,22 +48,12 @@ canvas.addEventListener("mousedown", e => {
 canvas.addEventListener("mouseup", e => flags["mousedown"] = false);
 canvas.addEventListener("mousemove", e => drawLine(e));
 
-var redSlider = document.querySelector("#redSlider");
-var greenSlider = document.querySelector("#greenSlider");
-var blueSlider = document.querySelector("#blueSlider");
-document.querySelector("#sliders").addEventListener("input", e => {
-  var colour = `rgb(${redSlider.value}, ${greenSlider.value}, ${blueSlider.value})`;
-  mainColour = colour;
-  ctx.strokeStyle = ctx.fillStyle = mainColour;
-  var c = document.querySelector("#mainColourCanvas");
-  c.getContext("2d").fillStyle = mainColour;
-  c.getContext("2d").fillRect(0, 0, c.width, c.height);
-});
+document.querySelector("#sliders").addEventListener("input", e => 
+  updateMainColour(redSlider.value, greenSlider.value, blueSlider.value)
+);
 
 colourButton.addEventListener("click", e => {
-  var c = document.querySelector("#mainColourCanvas");
-  c.style.backgroundColor = `rgb(${redSlider.value}, ${greenSlider.value}, ${blueSlider.value})`;
-  ctx.strokeStyle = ctx.fillStyle = c.style.backgroundColor;
+  updateMainColour(redSlider.value, greenSlider.value, blueSlider.value);
   flags["displayColours"] = !flags["displayColours"];
   if (flags["displayColours"]) {
     document.querySelector("#sliders").style.display="block";
@@ -81,16 +95,13 @@ function addImage(e) {
 function getColourAt(x, y) {
   /* Returns the RGBA values at the (x, y)-positioned pixel on the canvas */
   var colour = ctx.getImageData(x, y, 1, 1).data;
-  console.log(x, y);
-  console.log(colour);
-  mainColour = `rgb(${colour[0]}, ${colour[1]}, ${colour[2]}, ${colour[3]})`;
-  ctx.strokeStyle = ctx.fillStyle = mainColour;
+  updateMainColour(colour[0], colour[1], colour[2], a = colour[3]);
   return colour;
 }
 
 canvas.addEventListener("click", e => {
   if (flags["getColour"]) {
-    return getColourAt(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    getColourAt(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
   }
 });
 

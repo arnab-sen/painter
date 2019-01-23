@@ -1,6 +1,15 @@
 html {
   touch-action: none;
-  background-color: black;
+  background-color: rgb(50, 50, 50);
+}
+
+p {
+  color: white;
+  font-family: sans-serif;
+}
+
+#mainColourLabel {
+  display: inline-block;
 }
 
 #mainCanvas {
@@ -9,7 +18,10 @@ html {
 }
 
 #mainColourCanvas {
-  background-color: black;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: white;
+  margin: 10px;
 }
 
 #clear {
