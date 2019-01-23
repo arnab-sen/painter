@@ -111,14 +111,25 @@ paintButton.addEventListener("click", () => {flags["getColour"] = false; flags["
 var colourPicker = document.querySelector("#colour-picker");
 colourPicker.addEventListener("click", () => {flags["paint"] = false; flags["getColour"] = true;});
 
-var test = document.querySelector("#test");
-test.addEventListener("click", e => {
+var opacityChanger = document.querySelector("#opacityChanger");
+opacityChanger.addEventListener("click", e => {
   var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  console.log(imageData.data.slice(0, 20));
-  for (var i = 0; i < imageData.data.length; i += 4) {
-    imageData.data[i + 0] += 50;
-  }
+  imageData = changeOpacity(imageData, 0);
   ctx.putImageData(imageData, 0, 0);
 });
+
+function changeOpacity(imageData, opacity) {
+  /* Changes the alpha value of each pixel that matches mainColour */
+  for (var i = 0; i < imageData.data.length; i += 4) {
+    var r, g, b;
+    r = imageData.data[i];
+    g = imageData.data[i + 1];
+    b = imageData.data[i + 2];
+    if (`rgba(${r}, ${g}, ${b}, ${a})` == mainColour) {
+      imageData.data[i + 3] = opacity;
+    }
+  }
+  return imageData;
+}
 
 
