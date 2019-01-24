@@ -14,7 +14,7 @@ p {
 
 #mainCanvas {
   display: block;
-  background-color: white;
+  background-color: rgb(220, 255, 255);
 }
 
 #mainColourCanvas {
