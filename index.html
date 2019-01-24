@@ -7,14 +7,18 @@
 	</head>
 	
 	<body>
-	  <div id="centered-elements" align="center">
+	  <div id="button-row-1" class="buttonRow" align="center">
 	    <canvas id="mainCanvas" width="500" height="500"></canvas>
-      <button id="clear">Clear</button>
+      <button id="clear" class="rowStarter">Clear</button>
       <input id="imageButton" type="file" accept="image/*"></input>
       <button id="opacityChanger">Change Opacity</button>
       <button id="paint">Paint</button>
       <button id="colours">Show RGB Sliders</button>
       <button id="colour-picker">Colour Picker</button>
+	  </div>
+	  <div id="button-row-2" class="buttonRow" align="center">
+      <button id="decreaseBrushSize" class="rowStarter">Decrease Brush Size</button>
+      <button id="increaseBrushSize">Increase Brush Size</button>
 	  </div>
 	  <div align="center">
 	    <canvas id="mainColourCanvas" width="50" height="50"></canvas>

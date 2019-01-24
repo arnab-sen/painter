@@ -39,7 +39,6 @@ function updateMainColour(r, g, b, a = 255) {
 
 clearButton.addEventListener("click", e => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  canvas.width = canvas.height = "500";
   updateMainColour(redSlider.value, greenSlider.value, blueSlider.value);
 });
 canvas.addEventListener("click", e => drawPixel(e));
@@ -63,6 +62,16 @@ colourButton.addEventListener("click", e => {
   } else {
     document.querySelector("#sliders").style.display="none";
   }
+});
+
+var decreaseBrushSizeButton = document.querySelector("#decreaseBrushSize");
+decreaseBrushSizeButton.addEventListener("click", e => {
+  if (ctx.lineWidth > 1) ctx.lineWidth -= 1;
+});
+
+var increaseBrushSizeButton = document.querySelector("#increaseBrushSize");
+increaseBrushSizeButton.addEventListener("click", e => {
+  ctx.lineWidth += 1;
 });
 
   
