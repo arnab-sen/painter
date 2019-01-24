@@ -102,6 +102,19 @@ function addImage(e) {
   reader.readAsDataURL(e.target.files[0])
 }
 
+var addImageFromURLButton = document.querySelector("#addURLImage");
+addImageFromURLButton.addEventListener("click", addImageFromURL);
+
+function addImageFromURL() {
+  var URL = prompt("Enter the URL of the image:");
+  var image = new Image();
+  image.src = URL;
+  image.onload = () => ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+  var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.putImageData(imageData, 0, 0);
+}
+
 function getColourAt(x, y) {
   /* Returns the RGBA values at the (x, y)-positioned pixel on the canvas */
   var colour = ctx.getImageData(x, y, 1, 1).data;
