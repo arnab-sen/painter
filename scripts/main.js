@@ -40,6 +40,7 @@ function updateMainColour(r, g, b, a = 255) {
 clearButton.addEventListener("click", e => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   canvas.width = canvas.height = "500";
+  updateMainColour(redSlider.value, greenSlider.value, blueSlider.value);
 });
 canvas.addEventListener("click", e => drawPixel(e));
 canvas.addEventListener("mousedown", e => {
