@@ -11,8 +11,6 @@ var flags = {
   "getColour" : false,
   "displayColours" : false,
   "startSelection" : false,
-  "selectionP1" : false,
-  "selectionP2" : false,
   "moveSelection" : false};
   
 var redSlider = document.querySelector("#redSlider");
@@ -51,22 +49,27 @@ canvas.addEventListener("click", e => {
   if (flags["startSelection"]) {
     var x = e.clientX - canvas.offsetLeft;
     var y = e.clientY - canvas.offsetTop;
-    if (!flags["selectionP1"]) {
+    if (!selection["x1"]) {
       selection["x1"] = x;
       selection["y1"] = y;
       flags["selectionP1"] = true;
-    } else if (!flags["selectionP2"]) {
+    } else if (!selection["x2"]) {
       selection["x2"] = x;
       selection["y2"] = y;
       flags["selectionP2"] = true;
+    } else {
+      makeSelection();
     }
   }
   if (flags["moveSelection"]) {
     var x = e.clientX - canvas.offsetLeft;
     var y = e.clientY - canvas.offsetTop;
     var imageData = selection["imageData"];
-    ctx.clearRect(x, y, imageData.width, imageData.height);
+    ctx.clearRect(selection["x1"], selection["y1"], imageData.width, imageData.height);
     ctx.putImageData(imageData, x, y);
+    selection = {"x1" : null, "y1" : null, "x2" : null, "y2" : null, "imageData" : null};
+    flags["moveSelection"] = false;
+    flags["startSelection"] = false;
   }
 });
 canvas.addEventListener("mousedown", e => {
