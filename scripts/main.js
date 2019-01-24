@@ -9,13 +9,18 @@ var flags = {
   "mousedown" : false, 
   "paint" : true, 
   "getColour" : false,
-  "displayColours" : false};
+  "displayColours" : false,
+  "startSelection" : false,
+  "selectionP1" : false,
+  "selectionP2" : false,
+  "moveSelection" : false};
   
 var redSlider = document.querySelector("#redSlider");
 var greenSlider = document.querySelector("#greenSlider");
 var blueSlider = document.querySelector("#blueSlider")
 var mainColour;
 updateMainColour(0, 0, 0, 255);
+var selection = {"x1" : null, "y1" : null, "x2" : null, "y2" : null, "imageData" : null};
 
 // Initialise slider thumb positions at rgb(0, 0, 0)
 redSlider.stepDown(255);
@@ -41,7 +46,29 @@ clearButton.addEventListener("click", e => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   updateMainColour(redSlider.value, greenSlider.value, blueSlider.value);
 });
-canvas.addEventListener("click", e => drawPixel(e));
+canvas.addEventListener("click", e => {
+  drawPixel(e);
+  if (flags["startSelection"]) {
+    var x = e.clientX - canvas.offsetLeft;
+    var y = e.clientY - canvas.offsetTop;
+    if (!flags["selectionP1"]) {
+      selection["x1"] = x;
+      selection["y1"] = y;
+      flags["selectionP1"] = true;
+    } else if (!flags["selectionP2"]) {
+      selection["x2"] = x;
+      selection["y2"] = y;
+      flags["selectionP2"] = true;
+    }
+  }
+  if (flags["moveSelection"]) {
+    var x = e.clientX - canvas.offsetLeft;
+    var y = e.clientY - canvas.offsetTop;
+    var imageData = selection["imageData"];
+    ctx.clearRect(x, y, imageData.width, imageData.height);
+    ctx.putImageData(imageData, x, y);
+  }
+});
 canvas.addEventListener("mousedown", e => {
   flags["mousedown"] = true; 
   if (!flags["paint"]) return;
@@ -110,9 +137,6 @@ function addImageFromURL() {
   var image = new Image();
   image.src = URL;
   image.onload = () => ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-  var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.putImageData(imageData, 0, 0);
 }
 
 function getColourAt(x, y) {
@@ -156,4 +180,26 @@ function changeOpacity(imageData, opacity) {
   return imageData;
 }
 
+var selectionButton = document.querySelector("#selection");
+selectionButton.addEventListener("click", makeSelection);
+
+function makeSelection() {
+  flags["startSelection"] = !flags["startSelection"];
+  
+  // If the selection is complete:
+  if (!flags["startSelection"]) {
+    var x = selection["x1"];
+    var y = selection["y1"];
+    var width = selection["x2"] - selection["x1"];
+    var height = selection["y2"] - selection["y1"];
+    selection["imageData"] = ctx.getImageData(x, y, width, height);
+  }
+}
+
+var moveSelectionButton = document.querySelector("#moveSelection");
+moveSelectionButton.addEventListener("click", moveSelection);
+
+function moveSelection() {
+  flags["moveSelection"] = !flags["moveSelection"];
+}
 
