@@ -83,8 +83,6 @@ function addImage(e) {
     var image = new Image();
     image.onload = () => {
       var scale = 1;
-      canvas.width = image.width * scale;
-      canvas.height = image.height * scale;
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
     }
     image.src = ev.target.result;
