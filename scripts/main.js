@@ -66,12 +66,12 @@ colourButton.addEventListener("click", e => {
 
 var decreaseBrushSizeButton = document.querySelector("#decreaseBrushSize");
 decreaseBrushSizeButton.addEventListener("click", e => {
-  if (ctx.lineWidth > 1) ctx.lineWidth -= 1;
+  if (ctx.lineWidth > 1) ctx.lineWidth -= 10;
 });
 
 var increaseBrushSizeButton = document.querySelector("#increaseBrushSize");
 increaseBrushSizeButton.addEventListener("click", e => {
-  ctx.lineWidth += 1;
+  ctx.lineWidth += 10;
 });
 
   
