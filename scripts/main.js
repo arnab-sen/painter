@@ -24,6 +24,8 @@ blueSlider.stepDown(255);
 
 function updateMainColour(r, g, b, a = 255) {
   colour = `rgba(${r}, ${g}, ${b}, ${a})`;
+  var mainColourLabel = document.querySelector("#mainColourLabel");
+  mainColourLabel.innerHTML = "Current colour: " + `rgb(${r}, ${g}, ${b})`;
   mainColour = colour;
   ctx.strokeStyle = ctx.fillStyle = mainColour;
   mainColourCanvas.style.backgroundColor = mainColour;
