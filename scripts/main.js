@@ -17,13 +17,13 @@ var redSlider = document.querySelector("#redSlider");
 var greenSlider = document.querySelector("#greenSlider");
 var blueSlider = document.querySelector("#blueSlider")
 var mainColour;
-updateMainColour(0, 0, 0, 255);
+updateMainColour(255, 255, 255, 255);
 var selection = {"x1" : null, "y1" : null, "x2" : null, "y2" : null, "imageData" : null};
 
-// Initialise slider thumb positions at rgb(0, 0, 0)
-redSlider.stepDown(255);
-greenSlider.stepDown(255);
-blueSlider.stepDown(255);
+// Initialise slider thumb positions at rgb(255, 255, 255)
+redSlider.stepUp(255);
+greenSlider.stepUp(255);
+blueSlider.stepUp(255);
 
 function updateMainColour(r, g, b, a = 255) {
   colour = `rgba(${r}, ${g}, ${b}, ${a})`;
