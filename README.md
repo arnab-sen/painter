@@ -1,2 +1,1 @@
-# painter
-A web-based paint app
+A browser-based paint app. Viewable at <https://arnab-sen.github.io/painter>
