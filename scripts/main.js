@@ -9,7 +9,7 @@ var flags = {
   "mousedown" : false, 
   "paint" : true, 
   "getColour" : false,
-  "displayColours" : false,
+  "displayColours" : true,
   "startSelection" : false,
   "moveSelection" : false};
   
@@ -17,13 +17,14 @@ var redSlider = document.querySelector("#redSlider");
 var greenSlider = document.querySelector("#greenSlider");
 var blueSlider = document.querySelector("#blueSlider")
 var mainColour;
-updateMainColour(255, 255, 255, 255);
+updateMainColour(0, 0, 0, 255);
+document.querySelector("#sliders").style.display="block";
 var selection = {"x1" : null, "y1" : null, "x2" : null, "y2" : null, "imageData" : null};
 
 // Initialise slider thumb positions at rgb(255, 255, 255)
-redSlider.stepUp(255);
-greenSlider.stepUp(255);
-blueSlider.stepUp(255);
+//redSlider.stepUp(255);
+//greenSlider.stepUp(255);
+//blueSlider.stepUp(255);
 
 function updateMainColour(r, g, b, a = 255) {
   colour = `rgba(${r}, ${g}, ${b}, ${a})`;
